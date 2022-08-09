@@ -55,16 +55,29 @@ o.background = 'dark'
 -- g.tokyonight_style = "storm"
 
 g.catppuccin_flavour = 'latte'
-require('catppuccin').setup()
+require('catppuccin').setup {
+    color_overrides = {
+        latte = {
+            base = "#f2f2e8";
+            text = "#000000";
+            surface2 = "#5c6060";
+            surface1 = "#9699a3";
+            lavender = "#5b6cca";
+        },
+    },
+    transparent_background = false;
+}
 
-vim.cmd [[colorscheme tokyonight]]
+g.aquarium_style = "light"
+
+vim.cmd [[colorscheme catppuccin]]
 
 -- Undo and backup
 
 o.backup = true
 o.writebackup = true
 o.swapfile = true
-o. undofile = true
+o.undofile = true
 
 o.backupdir = '/tmp'
 o.directory = '/tmp'
@@ -85,8 +98,14 @@ o.wrap = true
 o.textwidth = 300
 
 o.list = true
-o.listchars = 'trail:·,nbsp:◇,tab:→ ,extends:▸,precedes:◂'
--- o.listchars = 'eol:¬,space:·,lead: ,trail:·,nbsp:◇,tab:→-,extends:▸,precedes:◂,multispace:···⬝,leadmultispace:│   ,'
+o.listchars = {
+    trail = '·',
+    nbsp = '◇',
+    tab = '→',
+    extends = '▸',
+    precedes = '◂',
+    eol = '¬',
+}
 -- o.formatoptions = 'qrn1'
 
 --> Clipboard
