@@ -1,10 +1,8 @@
-local g = vim.g
-local o = vim.o
+local g   = vim.g
+local o   = vim.o
+local opt = vim.opt
 
 -- General
-
-g.mapleader = ' '
-g.maplocalleader = ' '
 
 o.history = 50
 
@@ -13,6 +11,10 @@ o.history = 50
 
 -- When a file is changed from the outside
 o.autoread = true
+
+-- Encoding
+opt.encoding     = 'utf8'
+opt.fileencoding = 'utf8'
 
 -- User Interface
 
@@ -28,9 +30,9 @@ o.hidden = true
 
 -- Searching
 o.ignorecase = true
-o.smartcase = true
-o.hlsearch = false
-o.incsearch = true
+o.smartcase  = true
+o.hlsearch   = false
+o.incsearch  = true
 
 -- Don't redraw when executing macros
 o.lazyredraw = true
@@ -41,16 +43,18 @@ o.magic = true
 -- o.showmatch = true
 
 -- Numbers
-o.number = true
-o.numberwidth = 6
+o.number         = true
+o.numberwidth    = 6
 o.relativenumber = true
--- o.signcolumn = 'yes'
-o.cursorline = true
+-- opt.signcolumn   = 'yes'
+o.cursorline     = true
+opt.colorcolumn  = '80'
 
 -- Colors
 
+o.t_co          = 256
 o.termguicolors = true
-o.background = 'dark'
+o.background    = 'light'
 
 -- g.tokyonight_style = "storm"
 
@@ -58,10 +62,13 @@ g.catppuccin_flavour = 'latte'
 require('catppuccin').setup {
     color_overrides = {
         latte = {
-            base = "#f2f2e8";
-            text = "#000000";
-            surface2 = "#5c6060";
+            base     = "#f5f3f0";
+            text     = "#18181A";
+
+            surface2 = "#38393d";
             surface1 = "#9699a3";
+            overlay0 = "#acb0be";
+
             lavender = "#5b6cca";
         },
     },
@@ -70,45 +77,52 @@ require('catppuccin').setup {
 
 g.aquarium_style = "light"
 
-vim.cmd [[colorscheme catppuccin]]
+-- Colorscheme election
+vim.cmd('colorscheme catppuccin')
 
 -- Undo and backup
 
-o.backup = true
+o.backup      = true
 o.writebackup = true
-o.swapfile = true
-o.undofile = true
+o.swapfile    = true
+o.undofile    = true
 
-o.backupdir = '/tmp'
-o.directory = '/tmp'
-o.undodir = '/tmp'
+o.backupdir   = '/tmp'
+o.directory   = '/tmp'
+o.undodir     = '/tmp'
 
 --> Text, tabs and indent
 
-o.expandtab = true
-o.smarttab = true
+o.expandtab  = true
+o.smarttab   = true
 -- o.cindent = true
 o.autoindent = true
 
 -- 1 tab == 4 spaces
 o.shiftwidth = 4
-o.tabstop = 4
+o.tabstop    = 4
 
-o.wrap = true
+o.wrap      = true
 o.textwidth = 300
 
-o.list = true
-o.listchars = {
-    trail = '·',
-    nbsp = '◇',
-    tab = '→',
-    extends = '▸',
-    precedes = '◂',
-    eol = '¬',
+o.list        = true
+opt.listchars = {
+    -- This appear in all the document
+    -- eol        = '¬';
+    -- space      = '·';
+    -- multispace = '···+';
+
+    -- This doesn't work because 1 tab == 4 spaces
+    -- tab = '»·';
+
+    trail    = '·';
+    extends  = '▸';
+    precedes = '◂';
 }
 -- o.formatoptions = 'qrn1'
 
 --> Clipboard
+
 o.clipboard = 'unnamedplus'
 
 --> Folds
