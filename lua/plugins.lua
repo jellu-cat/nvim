@@ -35,9 +35,20 @@ return require('packer').startup(
         end
     }
     
-    -- ===> Completion
+    -- ===> LSP
     use 'neovim/nvim-lspconfig'
-    
+
+    use {
+        'MordechaiHadad/nvim-lspmanager',
+        requires = {
+            'neovim/nvim-lspconfig'
+        },
+        config = function()
+            require('lspmanager').setup()
+        end,
+    }
+
+    -- ===> Completion
     use {
         'windwp/nvim-autopairs',
         config = function()
@@ -78,13 +89,6 @@ return require('packer').startup(
     
     -- ===> Markdown Live Preview
     -- install without yarn or npm
-    use {
-        'iamcco/markdown-preview.nvim',
-        run = function()
-            vim.fn["mkdp#util#install"]()
-        end,
-    }
-    
     use {
         'iamcco/markdown-preview.nvim',
         run = 'cd app && npm install',
@@ -134,6 +138,12 @@ return require('packer').startup(
                 -- or leave it empty to use the default settings
             }
         end
+    }
+
+    -- ===> Jupyter Integration
+    use {
+        'jupyter-vim/jupyter-vim',
+        as = 'jupyter'
     }
     
   -- Automatically set up your configuration after cloning packer.nvim
