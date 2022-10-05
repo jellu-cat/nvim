@@ -6,11 +6,28 @@ if fn.empty(fn.glob(install_path)) > 0 then
   vim.cmd('packadd packer.nvim')
 end
 
+
 return require('packer').startup(
     function(use)
 
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
+
+    -- ===> Mason
+    -- use {
+    --     'williamboman/mason.nvim',
+    --     config = function()
+    --     require("mason").setup{
+    --         ui = {
+    --         icons = {
+    --             package_installed = "✓",
+    --             package_pending = "➜",
+    --             package_uninstalled = "✗"
+    --             }
+    --         }
+    --     }
+    --     end,
+    -- }
 
     -- ===> ColorSchemes
     use 'ellisonleao/gruvbox.nvim'
@@ -37,16 +54,41 @@ return require('packer').startup(
     
     -- ===> LSP
     use 'neovim/nvim-lspconfig'
+    use 'hrsh7th/nvim-cmp'
+    use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-path'
+    use 'saadparwaiz1/cmp_luasnip'
+    use 'hrsh7th/cmp-nvim-lsp'
+    use 'L3MON4D3/LuaSnip'
+    use 'rafamadriz/friendly-snippets' 
+    use 'hrsh7th/cmp-vsnip'
+    use 'hrsh7th/vim-vsnip'
 
-    use {
-        'MordechaiHadad/nvim-lspmanager',
-        requires = {
-            'neovim/nvim-lspconfig'
-        },
-        config = function()
-            require('lspmanager').setup()
-        end,
-    }
+    -- use 'williamboman/mason-lspconfig.nvim'
+    -- use 'williamboman/nvim-lsp-installer'
+    --
+    -- local lsp_installer = require("nvim-lsp-installer")
+
+    -- use {
+    --     'MordechaiHadad/nvim-lspmanager',
+    --     requires = {
+    --         'neovim/nvim-lspconfig'
+    --     },
+    --     config = function()
+    --         require('lspmanager').setup(){
+    --             ensure_installed = {
+    --                 "clangd",
+    --                 "bashls",
+    --                 "cssls",
+    --                 "html",
+    --                 "jsonnet",
+    --                 "jsonls",
+    --                 "texlab",
+    --                 "sumneko_lua",
+    --             }
+    --         }
+    --     end,
+    -- }
 
     -- ===> Completion
     use {
@@ -57,6 +99,14 @@ return require('packer').startup(
         end
     }
     
+    -- ===> Finder
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.0',
+        requires = {
+            'nvim-lua/plenary.nvim'
+        }
+    }
+
     -- ===> Beautify
     use 'maksimr/vim-jsbeautify'
     
