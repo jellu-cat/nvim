@@ -88,55 +88,39 @@ return require('packer').startup(
             end,
         }
 
+    -- ==== LSP-Zero
+        use {
+            'VonHeikemen/lsp-zero.nvim',
+            requires = {
+                {'neovim/nvim-lspconfig'},
+                {'williamboman/mason.nvim'},
+                {'williamboman/mason-lspconfig.nvim'},
+            }
+        }
+
     -- ===> LSP
-
-        use 'neovim/nvim-lspconfig'
-        use 'williamboman/mason.nvim'
-        use 'williamboman/mason-lspconfig.nvim'
-        use 'VonHeikemen/lsp-zero.nvim'
-        use 'j-hui/fidget.nvim'
-
         use 'folke/neodev.nvim'
+        use 'j-hui/fidget.nvim'
 
     -- ==== Completion Engines
         use 'hrsh7th/nvim-cmp'
         use 'hrsh7th/cmp-path'
-        use 'hrsh7th/cmp-nvim-lsp'
         use 'hrsh7th/cmp-buffer'
-        use {
-            'hrsh7th/cmp-path',
-            require('cmp').setup {
-                sources = { name = 'path'}
-            }
-        }
+        use 'hrsh7th/cmp-cmdline'
+        use 'saadparwaiz1/cmp_luasnip'
+        use 'hrsh7th/cmp-nvim-lsp'
+        use 'hrsh7th/cmp-nvim-lua'
 
     -- ==== Snippets Engines
         use 'L3MON4D3/LuaSnip'
         use 'rafamadriz/friendly-snippets'
 
-        use 'saadparwaiz1/cmp_luasnip'
-        use 'hrsh7th/cmp-nvim-lsp'
-        use 'hrsh7th/cmp-nvim-lua'
-
     -- ===> Autopair & Surround
-        use {
-            'windwp/nvim-autopairs',
-            config = function()
-                require('nvim-autopairs').setup {
-                }
-            end
-        }
-
+        use 'windwp/nvim-autopairs'
         use 'tpope/vim-surround'
 
     -- ===> Commenting
-        use {
-            'numToStr/Comment.nvim',
-            config = function()
-                require('Comment').setup {
-                }
-            end,
-        }
+        use 'numToStr/Comment.nvim'
 
     -- ====> Saving Folds & Cursor Position
         use 'vim-scripts/restore_view.vim'
@@ -144,7 +128,6 @@ return require('packer').startup(
     -- ====> Tabulation
         use 'godlygeek/tabular'
         use 'Yggdroot/indentLine'
-        use 'tpope/vim-sleuth'
         use 'lukas-reineke/indent-blankline.nvim'
 
     -- ===> Navigation
@@ -163,23 +146,13 @@ return require('packer').startup(
         use {
             'kyazdani42/nvim-tree.lua',
             requires = 'kyazdani42/nvim-web-devicons',
-            config = function()
-                require('nvim-tree').setup {
-                }
-            end
         }
 
     -- ===> StatusLine
         use 'nvim-lualine/lualine.nvim'
 
     -- ===> Colorizers
-        use {
-        'ziontee113/color-picker.nvim',
-        config = function()
-            require("color-picker").setup{
-            }
-        end
-        }
+        use 'ziontee113/color-picker.nvim'
 
     -- ===> Start Screen
     use 'mhinz/vim-startify'
@@ -189,13 +162,7 @@ return require('packer').startup(
     use 'voldikss/vim-floaterm'
 
     -- ===> WhichKey
-    use {
-        'folke/which-key.nvim',
-        config = function()
-            require('which-key').setup {
-            }
-        end
-    }
+    use 'folke/which-key.nvim'
 
     -- ===> Games
     use 'ThePrimeagen/vim-be-good'

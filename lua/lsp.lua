@@ -1,7 +1,6 @@
 local lsp = require('lsp-zero')
 
 lsp.preset('recommended')
-lsp.setup()
 
 lsp.ensure_installed{
     'sumneko_lua',
@@ -11,16 +10,19 @@ lsp.ensure_installed{
     'pyright',
 }
 
-local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
-local map = cmp.mapping
+lsp.set_preferences{
+    sign_icons = {}
+}
 
-local cmp_mappings = lsp.defaults.cmp_mappings {
+lsp.nvim_workspace()
+lsp.setup()
+
+--[[ local cmp_mappings = lsp.defaults.cmp_mappings {
     ['<C-p>'] = map.select_prev_item(cmp_select),
     ['<C-n>'] = map.select_next_item(cmp_select),
     ['<C-y>'] = map.confirm( {select = true} ),
     ['<C-Space>'] = map.complete(),
-}
+} ]]
 
 -- local completion = require ('completion')
 
