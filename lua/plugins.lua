@@ -1,33 +1,21 @@
-local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-
-if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system('git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path)
-  vim.cmd('packadd packer.nvim')
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
 end
 
+local packer_bootstrap = ensure_packer()
 
 return require('packer').startup(
     function(use)
 
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
-
-    -- ===> Mason
-    -- use {
-    --     'williamboman/mason.nvim',
-    --     config = function()
-    --     require("mason").setup{
-    --         ui = {
-    --         icons = {
-    --             package_installed = "✓",
-    --             package_pending = "➜",
-    --             package_uninstalled = "✗"
-    --             }
-    --         }
-    --     }
-    --     end,
-    -- }
 
     -- ===> ColorSchemes
     use 'ellisonleao/gruvbox.nvim'
@@ -52,44 +40,29 @@ return require('packer').startup(
         end
     }
     
+    -- ===> Treesitter
+
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = function()
+            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+            ts_update()
+        end,
+    }
+
     -- ===> LSP
-    use 'neovim/nvim-lspconfig'
+
     use 'hrsh7th/nvim-cmp'
-    use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-path'
-    use 'saadparwaiz1/cmp_luasnip'
     use 'hrsh7th/cmp-nvim-lsp'
-    use 'L3MON4D3/LuaSnip'
-    use 'rafamadriz/friendly-snippets' 
-    use 'hrsh7th/cmp-vsnip'
-    use 'hrsh7th/vim-vsnip'
-
-    -- use 'williamboman/mason-lspconfig.nvim'
-    -- use 'williamboman/nvim-lsp-installer'
-    --
-    -- local lsp_installer = require("nvim-lsp-installer")
-
-    -- use {
-    --     'MordechaiHadad/nvim-lspmanager',
-    --     requires = {
-    --         'neovim/nvim-lspconfig'
-    --     },
-    --     config = function()
-    --         require('lspmanager').setup(){
-    --             ensure_installed = {
-    --                 "clangd",
-    --                 "bashls",
-    --                 "cssls",
-    --                 "html",
-    --                 "jsonnet",
-    --                 "jsonls",
-    --                 "texlab",
-    --                 "sumneko_lua",
-    --             }
-    --         }
-    --     end,
-    -- }
-
+    use 'hrsh7th/cmp-buffer'
+    use {
+        'hrsh7th/cmp-path',
+        require('cmp').setup {
+            sources = { name = 'path'}
+        }
+    }
+    
     -- ===> Completion
     use {
         'windwp/nvim-autopairs',
@@ -98,14 +71,43 @@ return require('packer').startup(
             }
         end
     }
-    
-    -- ===> Finder
+
+    use 'j-hui/fidget.nvim'
+    use 'folke/neodev.nvim'
+
+    use {
+        'VonHeikemen/lsp-zero.nvim',
+
+        requires = {
+
+            -- LSP Support
+            {'neovim/nvim-lspconfig'},
+            {'williamboman/mason.nvim'},
+            {'williamboman/mason-lspconfig.nvim'},
+        
+            -- Autocompletion
+            {'hrsh7th/cmp-buffer'},
+            {'saadparwaiz1/cmp_luasnip'},
+            {'hrsh7th/cmp-nvim-lsp'},
+            {'hrsh7th/cmp-nvim-lua'},
+        
+            -- Snippets
+            {'L3MON4D3/LuaSnip'},
+            {'rafamadriz/friendly-snippets'},
+        }
+    }
+
+    -- ===> Navigation
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.0',
         requires = {
             'nvim-lua/plenary.nvim'
         }
     }
+
+    use {'theprimeagen/harpoon'}
+
+    use {'mbbill/undotree'}
 
     -- ===> Beautify
     use 'maksimr/vim-jsbeautify'
@@ -124,10 +126,13 @@ return require('packer').startup(
     
     -- ===> Colorizers
     use {
-        'norcalli/nvim-colorizer.lua',
-        require('colorizer').setup {}
+    'ziontee113/color-picker.nvim',
+    config = function()
+        require("color-picker").setup{
+        }
+    end
     }
-    
+
     -- ===> Commenting
     use {
         'numToStr/Comment.nvim',
@@ -154,6 +159,11 @@ return require('packer').startup(
         run = 'npm instal --prefix server'
     }
     
+    -- ===> Latex
+    use {
+        'vim-latex/vim-latex'
+    }
+
     -- ===> Clipboard
     -- use 'christoomey/vim-system-copy'
     
@@ -195,7 +205,15 @@ return require('packer').startup(
         'jupyter-vim/jupyter-vim',
         as = 'jupyter'
     }
-    
+
+    -- ===> Games
+    use 'ThePrimeagen/vim-be-good'
+
+      use 'nvim-lualine/lualine.nvim' -- Fancier statusline
+  use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
+  use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
+  use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if packer_bootstrap then
