@@ -1,3 +1,7 @@
+local g = vim.g
+
+g.catppuccin_flavour = 'latte'
+
 require('catppuccin').setup {
     color_overrides = {
         latte = {
