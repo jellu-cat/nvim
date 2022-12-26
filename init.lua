@@ -1,6 +1,5 @@
 require('plugins')
 require('keys')
 require('configs')
-require('colors')
 require('lsp')
 require('completion')
