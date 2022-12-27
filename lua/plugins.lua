@@ -101,6 +101,7 @@ return require('packer').startup(
     -- ===> LSP
         use 'folke/neodev.nvim'
         use 'j-hui/fidget.nvim'
+        use 'folke/trouble.nvim'
 
     -- ==== Completion Engines
         use 'hrsh7th/nvim-cmp'
