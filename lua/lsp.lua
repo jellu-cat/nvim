@@ -10,10 +10,6 @@ lsp.ensure_installed{
     'pyright',
 }
 
-lsp.set_preferences{
-    sign_icons = {}
-}
-
 lsp.nvim_workspace()
 lsp.setup()
 
