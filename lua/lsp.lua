@@ -2,7 +2,7 @@ local lsp = require('lsp-zero')
 
 lsp.preset('recommended')
 
-lsp.ensure_installed{
+lsp.ensure_installed {
     'sumneko_lua',
     'rust_analyzer',
     'texlab',
@@ -10,8 +10,41 @@ lsp.ensure_installed{
     'pyright',
 }
 
-lsp.nvim_workspace()
+lsp.set_preferences {
+    sign_icons = {
+        error = 'E',
+        warn = 'W',
+        hint = 'H',
+        info = 'I'
+    }
+}
+
 lsp.setup()
+
+-- Ensures the disgnostics in-line, signs in an additional
+-- column and color underline
+vim.diagnostic.config {
+    virtual_text = true;
+    signs = true;
+    underline =true;
+    float = {
+        border = 'single',
+        -- winhighlight = 'Normal:Normal,FloatBorder:Normal',
+        side_padding = 0,
+    }
+}
+
+local cmp = require('cmp')
+
+cmp.setup {
+    window = {
+        documentation = cmp.config.window.bordered {
+            border = 'single',
+            side_padding = 5,
+            -- winhighlight = 'Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None',
+        }
+    }
+}
 
 --[[ local cmp_mappings = lsp.defaults.cmp_mappings {
     ['<C-p>'] = map.select_prev_item(cmp_select),
@@ -20,8 +53,13 @@ lsp.setup()
     ['<C-Space>'] = map.complete(),
 } ]]
 
--- local completion = require ('completion')
-
--- clang-tools-extra
-
--- in fedora, compile texlab (cargo install -path .)
+-- Get the languaje server to recognize the 'vim' global
+require('lspconfig').sumneko_lua.setup {
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = {'vim'}
+            }
+        }
+    }
+}
