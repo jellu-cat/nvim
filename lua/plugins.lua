@@ -7,6 +7,17 @@
 --                            |___/
 ------------------------------------------------
 
+local border = {
+      {"🭽", "FloatBorder"},
+      {"▔", "FloatBorder"},
+      {"🭾", "FloatBorder"},
+      {"▕", "FloatBorder"},
+      {"🭿", "FloatBorder"},
+      {"▁", "FloatBorder"},
+      {"🭼", "FloatBorder"},
+      {"▏", "FloatBorder"},
+}
+
 local fn = vim.fn
 
 -- Automatically install packer
@@ -42,7 +53,7 @@ end
 packer.init {
     display = {
         open_fn = function()
-        return require("packer.util").float { border = "rounded" }
+        return require("packer.util").float { border = "double" }
     end,
     },
 }
@@ -168,6 +179,9 @@ return require('packer').startup(
     -- ===> Games
     use 'ThePrimeagen/vim-be-good'
 
+    -- ====> Scheme Support
+    use 'jeremycw/gambit.vim'
+
     -- -- ===> Latex
     -- use {'vim-latex/vim-latex'}
 
@@ -176,7 +190,7 @@ return require('packer').startup(
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
-    if packer_bootstrap then
+    if PACKER_BOOTSTRAP then
         require('packer').sync()
     end
 
