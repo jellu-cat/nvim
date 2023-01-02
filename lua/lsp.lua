@@ -30,18 +30,19 @@ vim.diagnostic.config {
     float = {
         border = 'single',
         -- winhighlight = 'Normal:Normal,FloatBorder:Normal',
-        side_padding = 0,
+        side_padding = -1,
     }
 }
 
 local cmp = require('cmp')
+local uvu
 
 cmp.setup {
     window = {
         documentation = cmp.config.window.bordered {
             border = 'single',
-            side_padding = 5,
-            -- winhighlight = 'Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None',
+            side_padding = -1,
+            winhighlight = 'Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None',
         }
     }
 }
@@ -54,7 +55,7 @@ cmp.setup {
 } ]]
 
 -- Get the languaje server to recognize the 'vim' global
-require('lspconfig').sumneko_lua.setup {
+--[[ require('lspconfig').sumneko_lua.setup {
     settings = {
         Lua = {
             diagnostics = {
@@ -62,4 +63,4 @@ require('lspconfig').sumneko_lua.setup {
             }
         }
     }
-}
+} ]]
