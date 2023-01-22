@@ -29,13 +29,14 @@ vim.diagnostic.config {
     underline =true;
     float = {
         border = 'single',
-        -- winhighlight = 'Normal:Normal,FloatBorder:Normal',
-        side_padding = -1,
+        header = 'Diagnostics',
+        winhighlight = 'Normal:Normal,FloatBorder:Normal',
+        -- side_padding = -1,
+        -- style = 'minimal',
     }
 }
 
 local cmp = require('cmp')
-local uvu
 
 cmp.setup {
     window = {
