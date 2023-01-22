@@ -43,10 +43,10 @@ o.magic = true
 -- o.showmatch = true
 
 -- Numbers
-o.number         = true
-o.numberwidth    = 6
+o.number         = false
+o.numberwidth    = 1
 o.relativenumber = true
--- opt.signcolumn   = 'yes'
+opt.signcolumn   = 'auto'
 o.cursorline     = true
 opt.colorcolumn  = '80'
 
